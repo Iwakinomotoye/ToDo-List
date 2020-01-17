@@ -1,0 +1,126 @@
+
+.task-list-handler {
+    display: flex;
+    color: #fa5;
+    font-weight: 500;
+    text-align: center;
+    padding: 20px 0px 0 10px;
+    position: relative;
+}
+.task-list-handler div:first-of-type {
+    padding-top: 5px;
+    padding-right: 10px;
+    width: fit-content;
+}
+.button-group {
+    margin: 0 auto;
+}
+
+.button-group > .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+/* .button-group button {
+    margin: 0 5px;
+} */
+/* .button-group button:focus {
+    background: #fa5;
+    color: #000;
+} */
+ul {
+    padding: 0px;
+    color: #fff;
+}
+li {
+    background: #0f042b;
+    border-radius: 10px;
+    list-style: none;
+    padding: 10px;
+    width: 100%;
+    margin: 10px 0;
+}
+.checkbox {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    padding: 0px 0px 0px 30px;
+}
+.checkbox input {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+.task {
+    margin: 0 20px;
+}
+.cancel + div .task-name:before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    width: 90%;
+    border: solid black;
+    border-width: 0 0 3px 0;
+}
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 10px 10px;
+}
+.task-group {
+    display: flex;
+}
+.task-deadline {
+    font-size: 14px;
+}
+.edit-task {
+    /* margin-left: auto; */
+    padding: 0 10px;
+}
+.copyright {
+    text-align: center;
+    padding: 20px 0;
+}
+@media screen and (min-width: 320px){
+    .cancel + div div:first-of-type:before{
+        width: 80%;
+    }
+    .task-list-handler {
+        padding: 20px 20px 0 20px;
+    }
+}
+@media screen and (min-width: 425px){
+    .button-group {
+        margin: 0;
+        margin-left: 10%;
+    }
+    .cancel + div div:first-of-type:before{
+        width: 65%;
+    }
+    .task-group {
+        position: absolute;
+        z-index: 1000;
+        right: 10px;
+        top: 10px;
+    }
+}
+@media screen and (min-width: 768px){
+    .dot {
+        margin: 10px 30px;
+    }
+    .button-group {
+        margin: 0;
+        margin-left: 15%;
+    }
+}
+@media screen and (min-width: 1200px){
+    .button-group {
+        margin: 0;
+        margin-left: 25%;
+    }
+}

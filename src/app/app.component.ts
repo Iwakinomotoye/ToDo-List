@@ -1,10 +1,41 @@
 import { Component } from '@angular/core';
+import { TaskService } from './shared/task.service';
+import { ITask } from './shared/task.interface';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: `
+    <div class="app-container">
+      <app-header></app-header>
+      <app-create-task [Task]="Task" (newTask)="onNewTask($event)"></app-create-task>
+      <app-task-list [Tasks]="Tasks" (taskToEdit)="onEditTask($event)" 
+      (newTasks)="onNewTasks($event)"></app-task-list>
+    </div>
+  `,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ToDo-List';
+  constructor(private taskService:TaskService){}
+  Tasks:ITask[];
+  Task:ITask;
+  ngOnInit() {
+      this.taskService.getTasks().subscribe((Tasks) => {
+          this.Tasks = Tasks;
+      })
+  }
+  onNewTask(task){
+      let result = this.Tasks.map(Task => Task.id)
+      let index = result.indexOf(task.id);
+      if(index > -1) {
+        this.Tasks[index] = { ...task };
+      } else {
+        this.Tasks.push(task);
+      }
+  }
+  onEditTask(task) {
+    this.Task = task;
+  }
+  onNewTasks(event) {
+    this.Tasks = event;
+  }
 }
