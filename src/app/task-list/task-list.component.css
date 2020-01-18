@@ -25,10 +25,10 @@
 /* .button-group button {
     margin: 0 5px;
 } */
-/* .button-group button:focus {
+.button-group button:focus {
     background: #fa5;
     color: #000;
-} */
+}
 ul {
     padding: 0px;
     color: #fff;
