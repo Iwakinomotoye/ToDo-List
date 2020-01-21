@@ -39,6 +39,8 @@ export class CollapsibleSectionComponent {
     ngOnChanges() {
         if(this.TaskIn.id) {
             this.visible = true;
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
         }
     }
 }
