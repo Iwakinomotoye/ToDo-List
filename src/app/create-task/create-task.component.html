@@ -1,24 +1,35 @@
 <collapsible-section [TaskIn]="Task">
     <form class="form" #taskForm="ngForm" (ngSubmit)="onNgSubmit(taskForm)" autocomplete="off">
-        <div class="form-group">
+        <div class="form-group" [class.input-error]="taskName.invalid && (taskForm.submitted || taskName.touched)">
             <label for="name">Task Name:</label>
             <input type="text" name="name" [(ngModel)]="Task.name" id="name" placeholder="Enter Task Name"
-            class="form-control" required>
+            class="form-control" #taskName="ngModel" required>
+            <span class="error" 
+            *ngIf="taskName.invalid && (taskForm.submitted || taskName.touched)"
+            >Add a name for your Task</span>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.input-error]="taskPriority.invalid && (taskForm.submitted || taskPriority.touched)">
             <label for="priority">Task Priority:</label>
             <select name="priority" id="priority" class="form-control" 
-            [(ngModel)]="Task.priority" required>
+            [(ngModel)]="Task.priority" #taskPriority="ngModel" required>
                 <option value="">Select Priority...</option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
             </select>
+            <span class="error" 
+            *ngIf="taskPriority.invalid && (taskForm.submitted || taskPriority.touched)"
+            >Select a valid Task Priority</span>
         </div>
-        <div class="form-group">
+
+        <div class="form-group" [class.input-error]="taskDeadline.invalid && (taskForm.submitted || taskDeadline.touched)">
             <label for="date">Deadline (Month/Day/Year):</label>
             <input type="date" id="date" name="deadline" placeholder="Select Deadline" class="form-control"
-            [ngModel]="Task.deadline | date: 'yyyy-MM-dd'" (ngModelChange)="Task.deadline = $event" required>
+            [ngModel]="Task.deadline | date: 'yyyy-MM-dd'" (ngModelChange)="Task.deadline = $event" required
+            #taskDeadline="ngModel">
+            <span class="error" 
+            *ngIf="taskDeadline.invalid && (taskForm.submitted || taskDeadline.touched)"
+            >Select a valid Date</span>
         </div>
         <button type="submit" class="btn btn-primary" *ngIf="!Task.id">Add Task</button>
         <button type="submit" class="btn btn-primary" *ngIf="Task.id">Update Task</button>
