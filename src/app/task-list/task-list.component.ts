@@ -10,10 +10,10 @@ import { TOASTR_TOKEN, IToastr } from '../shared/toastr.service';
     <div class="task-list-handler">
         <div>{{filteredTasks?.length}} Tasks</div>
         <div class="button-group">
-        <button (click)="filterBy('all')" class="btn btn-outline-secondary">All</button>
-        <button (click)="filterBy('low')" class="btn btn-outline-secondary">Low</button>
-        <button (click)="filterBy('medium')" class="btn btn-outline-secondary">Medium</button>
-        <button (click)="filterBy('high')" class="btn btn-outline-secondary">High</button>
+        <button (click)="filteringBy='all'; filterBy(filteringBy)" class="btn btn-outline-secondary">All</button>
+        <button (click)="filteringBy='low'; filterBy(filteringBy)" class="btn btn-outline-secondary">Low</button>
+        <button (click)="filteringBy='medium'; filterBy(filteringBy)" class="btn btn-outline-secondary">Medium</button>
+        <button (click)="filteringBy='high'; filterBy(filteringBy)" class="btn btn-outline-secondary">High</button>
         </div>
     </div>
     <ul>
@@ -43,15 +43,15 @@ export class TaskListComponent {
         @Inject(TOASTR_TOKEN) private toastrService: IToastr){}
     @Input() Tasks:ITask[];
     filteredTasks: ITask[];
+    filteringBy = 'all';
     @Output() taskToEdit = new EventEmitter();
     @Output() newTasks = new EventEmitter()
     cancel(event) {
         event.target.classList.toggle('cancel');
     }
     ngOnChanges() {
-        console.log('enter')
         if(this.Tasks) {
-            this.filteredTasks = this.Tasks;
+            this.filterBy(this.filteringBy);
         }
     }
     filterBy(name) {
@@ -73,18 +73,24 @@ export class TaskListComponent {
         }
     }
     onDelete(task) {
-        this.Tasks = this.Tasks.filter(Task => Task.id !== task.id)
-        this.filteredTasks = this.filteredTasks.filter(Task => Task.id !== task.id)
-        // this.Tasks lost its connection to his parent property, this.Tasks, when we
-        // assinged it to the filter array two lines above, but by emiting the new array
-        // to the parent container, as done below, and in the parent component, we assign 
-        // the new array to the parent 
-        //this.Tasks we make ngOnChanges get called in the child component, so that the 
-        // child's this.Tasks is reassigned to it parent property, this.Tasks.
-        this.newTasks.emit(this.Tasks);
-        this.toastrService.error('Task Deleted')
-        // write a http request for this.
-        this.taskService.deleteTask(task).subscribe();
+        let result = window.confirm('Are you sure you want to delete this task?');
+        if(result == true){
+            this.Tasks = this.Tasks.filter(Task => Task.id !== task.id);
+            this.filteredTasks = this.filteredTasks.filter(Task => Task.id !== task.id);
+            // this.Tasks lost its connection to his parent property, this.Tasks, when we
+            // assinged it to the filter array two lines above, but by emiting the new array
+            // to the parent container, as done below, and in the parent component, we assign 
+            // the new array to the parent 
+            //this.Tasks we make ngOnChanges get called in the child component, so that the 
+            // child's this.Tasks is reassigned to it parent property, this.Tasks.
+            this.newTasks.emit(this.Tasks);
+            this.toastrService.error('Task Deleted')
+            // write a http request for this.
+            this.taskService.deleteTask(task).subscribe();
+        } else {
+            return false;
+        }
+        
     }
     onEdit(task) {
         this.taskToEdit.emit(task);
