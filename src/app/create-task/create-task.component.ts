@@ -25,6 +25,14 @@ import { TOASTR_TOKEN, IToastr } from '../shared/toastr.service';
     .btn:first-of-type {
         margin-right: 4%;
     }
+    .error {
+        color: #E05C65;
+        font-size: 16px;
+    }
+    .input-error input, .input-error select {
+        background: #F3C3C5;
+        border: red;
+    }
     @media screen and (min-width: 576px){}
     `]
 })
@@ -32,6 +40,7 @@ import { TOASTR_TOKEN, IToastr } from '../shared/toastr.service';
 export class CreateTaskComponent {
     @Input() Task;
     @Output() newTask = new EventEmitter();
+    @Output() clearTask = new EventEmitter();
     @ViewChild("taskForm", {static:false}) formElement;
     constructor(private taskService:TaskService,
         @Inject(TOASTR_TOKEN) private toastrService: IToastr
@@ -71,12 +80,14 @@ export class CreateTaskComponent {
                     this.reset();
                 });
             }
-        } else {
-            console.log('no');
-        }
+        } 
+        // else {
+        //     console.log('no');
+        // }
     }
     reset() {
         this.formElement.resetForm();
         this.Task = this.emptyTask;
+        this.clearTask.emit();
     }
 }
