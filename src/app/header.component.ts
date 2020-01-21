@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
     template: `
         <div class='container'>
             <h2><img src="assets/To-Do-List.png">ToDoList</h2>
-            <div>Created with Angular by <a href="https://github.com/iwakinomotoye">@IwakinOmotoye</a></div>
+            <div>Created with Angular by <a href="https://twitter.com/iwakintoye">@IwakinOmotoye</a></div>
         </div>
     `,
     styles: [`
